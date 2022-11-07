@@ -12,6 +12,10 @@ Clone the repository somewhere and type
 > python setup.py install
 ```
 
+## Winkslides
+
+Add the *inscape_svg_to_pdf.bat* to the inscape bin directory.  
+
 ## Requirements
 
 This program has the following requirements:
