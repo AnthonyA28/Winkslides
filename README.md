@@ -1,6 +1,8 @@
-# InkSlides
+# WInkSlides
 
-`inkslides` generates a PDF presentation out of an inkscape SVG
+This is a fork of `inslides` updated to work on windows. I couldn't get the shell command for calling Inscape to create pdfs so this calls a custom batch script which must be placed in the inscape directory. 
+
+ `inkslides` generates a PDF presentation out of an inkscape SVG
 document. The order of slides and visibility of content is determined
 by the layer structure of the SVG. 
 
@@ -12,7 +14,7 @@ Clone the repository somewhere and type
 > python setup.py install
 ```
 
-## Winkslides
+## (Winkslides)
 
 Add the *inscape_svg_to_pdf.bat* to the inscape bin directory.  
 
