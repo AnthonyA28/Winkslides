@@ -22,11 +22,14 @@ from multiprocessing import Queue
 
 from lxml.etree import XMLParser, parse
 
-from .inkscape import InkscapeWorker
 from .merge import MergerWrapper
 from .utils import *
 
-__author__ = "Jan Oliver Oelerich"
+from svglib.svglib import svg2rlg
+from reportlab.graphics import renderPDF
+import threading
+
+__author__ = "Arrowood"
 __copyright__ = "Copyright 2013, Universitaet Marburg"
 __credits__ = ["Jan Oliver Oelerich"]
 __license__ = "MIT"
@@ -85,6 +88,15 @@ class InkSlides(object):
 
             time.sleep(.5)
 
+    def svg_to_pdf(self, svg_file, pdf_file_name):
+
+        command =r'"C:\Program Files\Inkscape\inkscape_svg_to_pdf.bat" ' + svg_file + " " + pdf_file_name
+        print("Command: " + command)
+        os.system(command)
+        # drawing = svg2rlg(svg_file)
+        # renderPDF.drawToFile(drawing, pdf_file_name)
+        print("drew pdf file" + pdf_file_name)
+    
     def run(self, file, temp=True):
         """
         Carry out the parsing, creation of PDF files and so on.
@@ -105,36 +117,28 @@ class InkSlides(object):
             print("PDF should be up to date. Quitting ...")
             return
 
-        print("Creating PDF slides in parallel on {} workers...".format(self.num_workers))
+        print("Creating PDF slides using svg2rlg")
 
-        # spawn a pool of workers and set up a request queue
-        # see http://stackoverflow.com/a/9039979/169748
-        workers = []
-        request_queue = Queue()
-        for i in range(self.num_workers):
-            workers.append(InkscapeWorker(request_queue))
 
-        # start workers
-        for w in workers:
-            w.start()
-
-        # populate the queue
+        thread_list = []
         self.pdf_files = []
         for svg_file, cached in self.svg_files:
-            pdf_file = self.pdf_from_svg(svg_file)
-            self.pdf_files.append(pdf_file)
-            request_queue.put((svg_file, pdf_file, cached))
+            print("svg_file")
+            self.pdf_files.append(svg_file+".pdf")
+            # self.svg_to_pdf(svg_file, svg_file+".pdf")
+            thread = threading.Thread( target = self.svg_to_pdf, args=[svg_file,svg_file+".pdf"] )
+            thread.start()
+            thread_list.append(thread)
 
-        # Sentinel objects to allow clean shutdown: 1 per worker.
-        for i in range(self.num_workers):
-            request_queue.put(None)
+    
+        for t in thread_list:
+            t.join()
 
-        # wait for workers to be finished
-        for w in workers:
-            w.join()
+        print(self.pdf_files)
 
         print("Merging PDF slides ...")
         self.join_slides_pdf()
+
 
         # remove the temp folder, if the keep option was not set
         self.clear_temp_folder(temp)
