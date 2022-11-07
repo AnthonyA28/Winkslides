@@ -25,7 +25,6 @@ from lxml.etree import XMLParser, parse
 from .merge import MergerWrapper
 from .utils import *
 
-from svglib.svglib import svg2rlg
 from reportlab.graphics import renderPDF
 import threading
 
@@ -93,8 +92,6 @@ class InkSlides(object):
         command =r'"C:\Program Files\Inkscape\inkscape_svg_to_pdf.bat" ' + svg_file + " " + pdf_file_name
         print("Command: " + command)
         os.system(command)
-        # drawing = svg2rlg(svg_file)
-        # renderPDF.drawToFile(drawing, pdf_file_name)
         print("drew pdf file" + pdf_file_name)
     
     def run(self, file, temp=True):
@@ -117,7 +114,7 @@ class InkSlides(object):
             print("PDF should be up to date. Quitting ...")
             return
 
-        print("Creating PDF slides using svg2rlg")
+        print("Creating PDF slides using ")
 
 
         thread_list = []
