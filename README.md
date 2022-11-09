@@ -1,10 +1,6 @@
-# WInkSlides
+# Inkslides
 
-This is a fork of `inslides` updated to work on windows. I couldn't get the shell command for calling Inscape to create pdfs so this calls a custom batch script which must be placed in the inscape directory. 
-
- `inkslides` generates a PDF presentation out of an inkscape SVG
-document. The order of slides and visibility of content is determined
-by the layer structure of the SVG. 
+This is a fork of `inslides` with some minor modifications because the code in the main repo wasn't working for me (2022-11-08). 
 
 ## Installation
 
@@ -129,3 +125,4 @@ The idea and many concepts of this script are taken from
 
   * Johannes Graeter: added slide enumeration
   * Johannes Graeter: added structuring by layers
+  * Anthony Arrowood: Update to use OS.System rather than Popen when reating PDFs
