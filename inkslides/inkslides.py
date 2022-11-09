@@ -89,7 +89,7 @@ class InkSlides(object):
 
     def svg_to_pdf(self, svg_file, pdf_file_name):
 
-        command =r'"C:\Program Files\Inkscape\inkscape_svg_to_pdf.bat" ' + svg_file + " " + pdf_file_name
+        command = r"inkscape " + svg_file +" --export-type=pdf  --export-filename=" + pdf_file_name
         print("Command: " + command)
         os.system(command)
         print("drew pdf file" + pdf_file_name)
