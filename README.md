@@ -1,6 +1,6 @@
 # Inkslides
 
-This is a fork of `inslides` with some minor modifications because the code in the main repo wasn't working for me (2022-11-08). 
+This is a fork of `inkslides` with some minor modifications because the code in the main repo wasn't working for me (2022-11-08). 
 
 ## Installation
 
